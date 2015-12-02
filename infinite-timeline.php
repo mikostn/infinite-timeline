@@ -29,7 +29,82 @@ class InfiniteTimeline {
 		add_shortcode('infinite-timeline', array( &$this, 'shortcode' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'add_script' ) );
 		add_action( 'wp_print_styles', array( &$this, 'add_style' ) );
+
+		register_activation_hook( __FILE__, array( &$this, 'rewrite_flush' ));
+		add_action( 'init', array( &$this, 'create_post_type' ));
+
+		add_action( 'add_meta_boxes_timeline_post', array( &$this, 'add_meta_boxes') );
+		add_action( 'save_post', array( &$this, 'update'), 10, 2 );
 	}
+
+	function rewrite_flush() {
+	    // First, we "add" the custom post type via the above written function.
+	    // Note: "add" is written with quotes, as CPTs don't get added to the DB,
+	    // They are only referenced in the post_type column with a post entry, 
+	    // when you add a post of this CPT.
+	    InfiniteTimeline::create_post_type();
+
+	    // ATTENTION: This is *only* done during plugin activation hook in this example!
+	    // You should *NEVER EVER* do this on every page load!!
+	    flush_rewrite_rules();
+	}
+
+	function create_post_type() {
+		register_post_type( 'timeline_post',
+			array(
+				'labels' => array(
+					'name' => __( 'Timeline Post' ),
+					'singular_name' => __( 'Timeline Post' )
+				),
+				'menu_icon' => 'dashicons-feedback',
+				'public' => true,
+				'has_archive' => true,
+				'menu_position' => 5,
+				'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'revisions', 'post-formats')
+			)
+		);
+	}
+	//////////////////////////////////////////
+	// add subtitles support
+	function add_meta_boxes() {
+		add_meta_box('timelineSubtitle', 'Subtitle', array( &$this, 'box'), 'timeline_post', 'side');
+	}
+	
+	function box( $post ) {
+		wp_nonce_field( 'a_save', 'n_tsub' );
+		?>
+			<input class="widefat" type="text" id="timeline-subtitle" name="timeline_subtitle" value="<?php echo get_post_meta( $post->ID, 'timeline_subtitle', true ); ?>" />
+		<?php
+	}
+
+	function update( $post_id ) {
+		if ( ! isset( $_POST['timeline_subtitle'] ) )
+			return;
+
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
+			return;
+
+		if ( ! isset( $_POST['timeline_subtitle'] ) )
+			return;
+
+		if( ! wp_verify_nonce( $_POST['n_tsub'], 'a_save' ) )
+			return;
+
+		// Check permissions
+		if ( 'post' == $_POST['post_type'] ) {
+			if ( ! current_user_can( 'edit_post', $post_id ) )
+				return;
+		} else {
+			if ( ! current_user_can( 'edit_page', $post_id ) )
+				return;
+		}
+		$subtitle = $_POST['timeline_subtitle'];
+
+		update_post_meta( $post_id, 'timeline_subtitle', $subtitle );
+
+	}
+
+
 
 	//////////////////////////////////////////
 	// add JavaScript
