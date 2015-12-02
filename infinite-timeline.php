@@ -165,10 +165,22 @@ class InfiniteTimeline {
 					$size = 'medium';
 				}
 
+				if(!empty($post->post_excerpt)){
+					$content = $post->post_excerpt;
+				}else{
+					$pieces = get_extended($post->post_content);
+					//var_dump($pieces); // debug
+					$content = apply_filters('the_content',$pieces['main']);
+				}
+				$subtitle = get_post_meta($post->ID, 'timeline_subtitle', true);
+				
 				$output .= '<div class="item' .$add_class .'"' .$add_style .'>';
 				$output .= '<a href="' .get_permalink() .'">';
 				$output .= get_the_post_thumbnail( $post->ID, $size );
-				$output .= '<div class="title">' .get_post_time( get_option( 'date_format' ) ) .'<br>' .$title .'</div>';
+//				$output .= '<div class="title">' .get_post_time( get_option( 'date_format' ) ) .'<br>' .$title .'</div>';
+				$output .= '<h4 class="title">' .$title .'</h4>';
+				$output .= (!empty($subtitle))? '<h5 class="subtitle">' . $subtitle .'</h5>' : '';
+				$output .= '<div class="content">'.$content.'</div>';
 				$output .= '</a>';
 				$output .= '</div>';
 
