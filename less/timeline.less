@@ -153,6 +153,11 @@
     }
 }
 
+/* set padding for list */
+#infinite_timeline {
+    padding: 0 90px;
+}
+
 #timeline-container {
     position: absolute;
     right: 0;
@@ -167,11 +172,15 @@
     padding: 0;
     &.affix {
         position: fixed;
-        top: 70px;
+        top: 90px;
+    }
+    &.affix-bottom {
+        position: absolute;
     }
     .year-list-item-top {
         /* margin-left: -4px;*/
         a {
+            color: #828282;
             display: block;
             background: #ffffff;
             border: #828282 3px solid;
@@ -181,6 +190,7 @@
             height: 36px;
             text-align: center;
             width: 36px;
+            padding: 2px 0px
         }
     }
     .year-list-item {
@@ -245,4 +255,72 @@
     #infinite_timeline .year_head {
         margin-top: 10px;
     }
+}
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width: 320px) {
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+    #infinite_timeline .item.left::before {
+        left: 332px; /*104% 101%*/
+    }
+    #infinite_timeline .item.right::before {
+        right: 42px; /* 11.5%; 13.5%;*/
+    }
+}
+
+/* Small Devices, Tablets */ /* BLUE */
+@media only screen and (min-width: 768px) {
+    #infinite_timeline .item.left::before {
+        left: 336px; /*104% 101%*/
+    }
+    #infinite_timeline .item.right::before {
+        right: 44px; /* 11.5%; 13.5%;*/
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+    #infinite_timeline .item.left::before {
+        left: 446px; /*104% 101%*/
+    }
+    #infinite_timeline .item.right::before {
+        right: 52px; /* 11.5%; 13.5%;*/
+    }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+    #infinite_timeline .item.left::before {
+        left: 545px; /*104% 101%*/
+    }
+    #infinite_timeline .item.right::before {
+        right: 60px; /* 11.5%; 13.5%;*/
+    }
+}
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1200px) {
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+}
+
+/* Small Devices, Tablets */ /* BLUE */
+@media only screen and (max-width: 768px) {
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width: 320px) {
 }
