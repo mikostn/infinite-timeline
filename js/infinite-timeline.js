@@ -41,7 +41,7 @@ jQuery(function () {
         function updateYearList() {
             // time line year leggend + proporcjonalne lata do postów = odległość head od top
             if (0 == jQuery('#timeline-year-list').length) {
-                jQuery('#infinite_timeline').prepend('<ul id="timeline-year-list"></ul>');
+                jQuery('#infinite_timeline').prepend('<div id="timeline-container"><ul id="timeline-year-list"></ul></div>');
             }
             // cal space
             var yearsCount = jQuery('.year_head').length;
@@ -56,24 +56,23 @@ jQuery(function () {
             jQuery.each(jQuery('.year_head'), function () {
                 var year = jQuery(this).data().yearpost;
                 var yearItemsCount = jQuery(jQuery('[data-yearpost=' + year + ']')).children('.item').length;
-                console.log(year + ' ' + yearItemsCount)
 
                 var listItem = jQuery('<li class="year-list-item"><span></span><a href="#' + jQuery(this).attr('name') + '">' + jQuery(this).text() + '</a></li>');
                 listItem.css('margin-top', yearItemsCount * spaceForItem + 'px');
                 jQuery('#timeline-year-list').append(listItem);
             });
+
             offset = jQuery('#infinite_timeline').offset();
-            console.log(offset);
             jQuery('#timeline-year-list').affix({
                 offset: {
                     top:  function () {
-                        return (this.top = offset.top - 70)
+                        return (this.top = offset.top - 70);
                     },
-                    bottom: function () {
-                        return (this.bottom = offset.top + jQuery('#infinite_timeline').outerHeight())
-                    }
+//                    bottom: function () {
+//                        return (this.bottom = offset.top + jQuery('#infinite_timeline').outerHeight());
+//                    }
                 }
-            })
+            });
         }
 
         infinite_timeline_adjust_vertical_position(0);
