@@ -119,7 +119,7 @@ class InfiniteTimeline {
     //////////////////////////////////////////
     // add css
     function add_style() {
-        $filename = plugins_url(dirname('/' . plugin_basename(__FILE__))) . '/css/infinite-timeline.css';
+        $filename = plugins_url(dirname('/' . plugin_basename(__FILE__))) . '/css/timeline.css';
         wp_enqueue_style('infinite-timeline', $filename, false, '1.1');
     }
 
