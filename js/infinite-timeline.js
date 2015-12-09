@@ -41,8 +41,8 @@ jQuery(function () {
         function updateYearList() {
             var scrollPadding = 90;
             // time line year leggend + proporcjonalne lata do postów = odległość head od top
-            if (0 == jQuery('#timeline-year-list').length) {
-                jQuery('#infinite_timeline').prepend('<div id="timeline-container"><ul id="timeline-year-list" class="nav"></ul></div>');
+            if (0 == jQuery('#infinite_timeline .timeline-year-list').length) {
+                jQuery('#infinite_timeline').prepend('<div class="timeline-container"><ul class="timeline-year-list nav"></ul></div>');
             }
             // cal space
             var yearsCount = jQuery('.year_head').length;
@@ -50,9 +50,9 @@ jQuery(function () {
             var totalSpace = (jQuery(window).height() - scrollPadding - 15 - (yearsCount * 24)) / yearsCount;
             var spaceForItem = totalSpace / itemsTotalCount;
 
-            jQuery('#timeline-year-list').empty();
+            jQuery('#infinite_timeline .timeline-year-list').empty();
 //            add id="year-list-top"
-            jQuery('#timeline-year-list').append('<li class="year-list-item-top"><a href="#timeline-top"><i class="fa fa-home"></i></a></li>');
+            jQuery('#infinite_timeline .timeline-year-list').append('<li class="year-list-item-top"><a href="#timeline-top"><i class="fa fa-home"></i></a></li>');
 
             jQuery.when(
                     jQuery.each(jQuery('.year_head'), function () {
@@ -61,11 +61,11 @@ jQuery(function () {
 
                         var listItem = jQuery('<li class="year-list-item"><span></span><a href="#' + jQuery(this).attr('name') + '">' + jQuery(this).text() + '</a></li>');
                         listItem.css('margin-top', yearItemsCount * spaceForItem + 'px');
-                        jQuery('#timeline-year-list').append(listItem);
+                        jQuery('#infinite_timeline .timeline-year-list').append(listItem);
                     })
                     ).done(function () {
-                        var timelineTop = jQuery('#infinite_timeline').offset().top
-                jQuery('#timeline-year-list').affix({
+                var timelineTop = jQuery('#infinite_timeline').offset().top
+                jQuery('#infinite_timeline .timeline-year-list').affix({
                     offset: {
                         top: function () {
                             return (this.top = timelineTop - scrollPadding);
