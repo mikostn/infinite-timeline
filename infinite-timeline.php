@@ -267,7 +267,7 @@ class InfiniteTimeline {
         if ($count) {
             $rewrite_url = ( $wp_rewrite->using_permalinks() ) ? '<div class="rewrite_url">' : '';
             $url = add_query_arg(array('infinite_timeline_next' => ( $infinite_timeline_next + 1 )));
-            $output = '<div id="infinite_timeline"><div class="box">' . $output . '</div></div><div class="pagenation"><a href="' . $url . '">' . __('More', 'infinite-timeline') . '</a><img src="' . plugins_url(dirname('/' . plugin_basename(__FILE__))) . '/images/loading.gif" alt="" class="loading">' . $rewrite_url . '</div></div>';
+            $output = '<div id="infinite_timeline"><a id="timeline-top" name="timeline-top"></a><div class="box">' . $output . '</div></div><div class="pagenation"><a href="' . $url . '">' . __('More', 'infinite-timeline') . '</a><img src="' . plugins_url(dirname('/' . plugin_basename(__FILE__))) . '/images/loading.gif" alt="" class="loading">' . $rewrite_url . '</div></div>';
         }
 
         return $output;

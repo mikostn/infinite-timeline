@@ -49,6 +49,7 @@ jQuery(function () {
             var itemsTotalCount = jQuery('#infinite_timeline .item').length;
             var totalSpace = (jQuery(window).height() - scrollPadding - 15 - (yearsCount * 24)) / yearsCount;
             var spaceForItem = totalSpace / itemsTotalCount;
+            var first = true;
 
             jQuery('#infinite_timeline .timeline-year-list').empty();
 //            add id="year-list-top"
@@ -60,7 +61,10 @@ jQuery(function () {
                         var yearItemsCount = jQuery(jQuery('[data-yearpost=' + year + ']')).children('.item').length;
 
                         var listItem = jQuery('<li class="year-list-item"><span></span><a href="#' + jQuery(this).attr('name') + '">' + jQuery(this).text() + '</a></li>');
-                        listItem.css('margin-top', yearItemsCount * spaceForItem + 'px');
+                        if (!first) {
+                            listItem.css('margin-top', yearItemsCount * spaceForItem + 'px');
+                        }
+                        first = false;
                         jQuery('#infinite_timeline .timeline-year-list').append(listItem);
                     })
                     ).done(function () {
