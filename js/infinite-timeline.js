@@ -83,7 +83,15 @@ jQuery(function () {
         }
 
         infinite_timeline_adjust_vertical_position(0);
-        updateYearList();
+    });
+    // run init func with delay, wiat for resize to finish, + wait for css animations to finish!
+    var resizeTimer;
+    $(window).on('load resize', function (e) {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+            // Run code here, resizing has "stopped"
+            setColorInits();
+        }, 400);
     });
 });
 
