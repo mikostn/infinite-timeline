@@ -246,7 +246,7 @@ class InfiniteTimeline {
                 }
                 $subtitle = get_post_meta($post->ID, 'timeline_subtitle', true);
 
-                $output .= '<div class="item' . $add_class . '"' . $add_style . '>';
+                $output .= '<div id="post-'.$post->ID.'" name="post-'.$post->ID.'" class="item' . $add_class . '"' . $add_style . '>';
                 $output .= '<a href="' . get_permalink() . '">';
                 $output .= get_the_post_thumbnail($post->ID, $size);
 //				$output .= '<div class="title">' .get_post_time( get_option( 'date_format' ) ) .'<br>' .$title .'</div>';
